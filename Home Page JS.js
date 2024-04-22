@@ -1,43 +1,24 @@
-const daysEl = document.getElementById("days");
-const hoursEl = document.getElementById("hours");
-const minsEl = document.getElementById("mins");
-const secondsEl = document.getElementById("seconds");
+const holiDate = new Date("March 17, 2025 00:00:00").getTime();
+const endDate = holiDate + (5 * 60 * 60 * 1000); // Set end date to 15 days after Holi
+const countdown = setInterval(() => {
+    const now = new Date().getTime();
+    const distance = endDate - now;
 
-const newYears = "31 Jan 2022";
+    if (distance <= 0) {
+        clearInterval(countdown);
+        document.querySelector('.sale-heading').innerText = "Holi Sale is Over";
+        document.querySelector('.countdown-container').style.display = "none";
+        return;
+    }
 
-function countdown() {
-    const newYearsDate = new Date(newYears);
-    const currentDate = new Date();
+   const days = Math.floor(distance / (1000 * 60 * 60*120));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    const totalSeconds = (newYearsDate - currentDate) / 1000;
-
-    const days = Math.floor(totalSeconds / 3600 / 24);
-    const hours = Math.floor(totalSeconds / 3600) % 24;
-    const mins = Math.floor(totalSeconds / 60) % 60;
-    const seconds = Math.floor(totalSeconds) % 60;
-
-    daysEl.innerHTML = days;
-    hoursEl.innerHTML = formatTime(hours);
-    minsEl.innerHTML = formatTime(mins);
-    secondsEl.innerHTML = formatTime(seconds);
-}
-
-function formatTime(time) {
-    return time < 10 ? `0${time}` : time;
-}
-
-// initial call
-countdown();
-
-setInterval(countdown, 1000);
-
-const searchButton = document.getElementById(".search-btn");
-const searchText = document.getElementById(".search-input");
-
-searchButton.addEventListener("click", () => {
-    const query = searchText.value;
-    if (!query) return;
-    fetchNews(query);
-    curSelectedNav?.classList.remove("active");
-    curSelectedNav = null;
-});
+    // Update the HTML elements with the calculated values
+    document.getElementById("days").innerText = days;
+    document.getElementById("hours").innerText = hours;
+    document.getElementById("mins").innerText = minutes;
+    document.getElementById("seconds").innerText = seconds;
+}, 1000);
