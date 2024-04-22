@@ -85,7 +85,9 @@
     cursor: pointer;
     color: #32b350;
 }
-
+.img{
+    border-radius: 50%;
+}
 @media screen and (max-width: 768px) {
     .container {
         width: 80%;
